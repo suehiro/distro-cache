@@ -15,7 +15,7 @@ $conf = {
   :log_rotation => "monthly",
 }
 
-class DistroProxyServer < WEBrick::HTTPProxyServer
+class DistroCacheServer < WEBrick::HTTPProxyServer
  def proxy_service(req, res)
    if %r!/$! =~ req.path
      localfile = File.join($conf[:cache_dir], req.host, req.path, '_index.html')
@@ -45,7 +45,7 @@ access_logger = Logger.new(File.join($conf[:log_dir], "#{PROGNAME}.log"), $conf[
 server_logger = Logger.new(File.join($conf[:log_dir], "#{PROGNAME}.out"), $conf[:log_rotation])
 server_logger.level = Logger::INFO
 
-s = DistroProxyServer.new(
+s = DistroCacheServer.new(
   Port: $conf[:port],
   # ServerType: WEBrick::Daemon,
   AccessLog: [[access_logger, WEBrick::AccessLog::COMBINED_LOG_FORMAT]],
