@@ -29,7 +29,7 @@ class DistroCacheServer < WEBrick::HTTPProxyServer
 
    super
 
-   if /\.(rpm|deb)$/ =~ localfile
+   if res.status == 200 and /\.(rpm|img|deb)$/ =~ localfile
      FileUtils.mkdir_p(File.dirname(localfile))
      open(localfile, 'w') do |f|
        f.write(res.body)
