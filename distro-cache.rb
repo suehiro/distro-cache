@@ -8,10 +8,8 @@ PROGNAME = File.basename($0, '.rb')
 
 $conf = {
   :port => 8080,
-#  :cache_dir => "/var/local/#{PROGNAME}",
-#  :log_dir => "/var/log",
-  :cache_dir => ".",
-  :log_dir => ".",
+  :cache_dir => "/var/cache/#{PROGNAME}",
+  :log_dir => "/var/log/#{PROGNAME}",
   :log_rotation => "monthly",
 }
 
@@ -47,7 +45,7 @@ server_logger.level = Logger::INFO
 
 s = DistroCacheServer.new(
   Port: $conf[:port],
-  # ServerType: WEBrick::Daemon,
+  ServerType: WEBrick::Daemon,
   AccessLog: [[access_logger, WEBrick::AccessLog::COMBINED_LOG_FORMAT]],
   Logger: server_logger
 )
